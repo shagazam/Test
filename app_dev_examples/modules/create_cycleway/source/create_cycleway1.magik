@@ -76,7 +76,7 @@ _private _method create_cycleway_plugin.init_actions()
     ##
     _self.add_action( sw_action.new( :new_geom,
 				     :engine, _self,
-				     :caption, "Create geometry",
+				     :caption, "Something Else",
 				     :action_message, :new_geom|()|,
 				     :enabled?, _false ))
     
