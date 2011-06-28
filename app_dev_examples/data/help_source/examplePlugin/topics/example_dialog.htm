@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Meal menu dialog</title>
+<link rel="stylesheet" type="text/css" href="../swstyles.css">
+<script language="JavaScript" src="../swscripts.js"></script>
+<script language="JavaScript">
+<!--
+// Run finishDocument() function when the document loads. Trap error after printing multiple topics in HTML Help, when it can't find JS file & style sheet
+function runOnLoadFunctions() {
+//	window.onerror = trapError	// when you get an error, run the trapError function
+	finishDocument()	// run the functions to finish the document
+}
+
+// Set the text to be visible before printing
+function runBeforePrint() {
+	body.style.visibility = 'visible'	// make body visible for printing
+}
+
+// Stop error messages appearing
+//function trapError() {
+//	return true	// do nothing: this stops an error message appearing
+//}
+// -->
+</script>
+</head>
+<body id="body" style="visibility: 'hidden'" onBeforePrint="runBeforePrint()" onLoad="runOnLoadFunctions()">
+
+<!-- This object holds all the keywords for this topic -->
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<!-- ALink Names -->
+	<param name="ALink Name" value="Meal menu dialog">
+	<!-- Index Keywords -->
+	<param name="Keyword" value="application development example">
+</object>
+
+<!-- Expand All Text Form -->
+<form name="form1">
+<span id="checkboxLabel" class="label"><input type="checkbox" name="ShowAll" accesskey="x" onClick="if (this.checked) {showAllText(); blur()} else {hideAllText(); blur()}">&nbsp;E<span class="accesskey">x</span>pand all text</span>
+<hr></form>
+
+<h1>Meal menu dialog</h1>
+
+<p>Use this dialog box to select your meal.</p>
+
+<p>Give your name and vegetarian status. Set the slider according to how hungry you are.
+   Check any or all of eggs, sausages and bacon (eggs only for vegetarians) and select 
+   your chosen portion size for chips.</p>
+   
+<p>Click OK to show the menu at the Magik prompt</p>
+
+<p>The dialog box is activated by the <b>Activate dialog</b> control which may be placed on
+   a menu or toolbar. The initial position of the dialog is determined by properties of
+   the Meal Menu plugin.</p>
+   
+<!-- Related Topics -->
+<p><hr><object id="hhctrl" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
+	<param name="Command" value="ALink,menu">
+	<param name="Button" value="">
+	<param name="Flags" value="1">
+	<param name="Item1" value="">
+	<param name="Item2" value="Changing options: Meal menu">
+	<param name="Item3" value="Activate meal menu">
+</object>
+<span class="label">&nbsp;&nbsp;Related topics</span></p>
+
+</body>
+</html>

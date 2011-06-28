@@ -1,0 +1,62 @@
+#% text_encoding = iso8859_1
+_package user
+#
+# Build and save the an image for the Applicaiton Development Example,
+# then quit.
+#
+# Must be run by 'load_file()', in a session started with an open
+# Cambridge Database.
+# Must be located 'next to' the modules directory
+#
+
+_block
+	smallworld_product.add_product(system.pathname_up(!source_file!, 2))
+	sw_module_manager.load_module("my_test_image", _unset)
+_endblock
+$
+_block
+	_local image_buildtime << date_time_now()
+	# Define the image file that will be run - this is merely a
+	# redirection file which will point to the real image.
+	_local image_name << "my_test.msf"
+
+	# Define the image file we actually want to save to.
+	_local internal_image_name << "my_test_main.msf"
+	
+	# Derive the directory to save images into.
+	_local images_dir << system.pathname_down(system.pathname_up(!compiler_file!, 2),"images")
+	
+	##
+	## For an image which will NOT autostart
+	## change argument to :startup_proc below
+	## to _unset 
+	##
+	##
+
+	# Call garbage collect a couple of times so we do not save more
+	# than is needed.
+	system.gc(_true )
+	system.gc(_true )
+
+	save_image_startup(system.pathname_from_components(internal_image_name,
+							   images_dir),
+				:redirection_file,
+				system.pathname_from_components(image_name,
+								images_dir),
+				:startup_proc,
+				_proc @start_with_cli()
+				startup()
+					# Enable CLI
+					_return _true
+				_endproc,
+				:join, _unset,
+				:quit?, _true)
+	
+	#
+	# This code will be run every time the image is opened
+	#
+	
+	write("Cambridge Database Open Image. Built on ", image_buildtime)
+
+_endblock 
+$

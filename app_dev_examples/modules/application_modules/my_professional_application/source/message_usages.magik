@@ -1,0 +1,9 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package user
+message_handler.new(:my_professional_application).set_uses_list({:swaf_professional_application, :cam_db_swaf_professional_application})
+$

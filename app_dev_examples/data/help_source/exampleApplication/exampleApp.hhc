@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<!-- Sitemap 1.0 -->
+</head>
+<body>
+<object type="text/site properties">
+	<param name="FrameName" value="_self">
+	<param name="Window Styles" value="0x400025">
+</object>
+
+<object type="text/sitemap">
+<param name="Merge" value="swworking.chm::/swworking.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swoption.chm::/swoption.hhc">
+</object>
+<ul>
+	<object type="text/sitemap">
+	<param name="Merge" value="exampleOptions.chm::/exampleOptions.hhc">
+	</object>
+</ul>
+<object type="text/sitemap">
+<param name="Merge" value="swvmgt.chm::/swvmgt.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swview.chm::/swview.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swobjectcontrol.chm::/swobjectcontrol.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swobject.chm::/swobject.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swtrail.chm::/swtrail.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swexplorer.chm::/swexplorer.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swquery.chm::/swquery.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swanaly.chm::/swanaly.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swrasters.chm::/swrasters.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swtins.chm::/swtins.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swlayouts.chm::/swlayouts.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swgloss.chm::/swgloss.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="swhelp.chm::/swhelp.hhc">
+</object>
+<object type="text/sitemap">
+<param name="Merge" value="examplePlugin.chm::/examplePlugin.hhc">
+</object>
+
+</body>
+</html>

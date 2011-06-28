@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Changing options: Meal menu</title>
+<link rel="stylesheet" type="text/css" href="../swstyles.css">
+<script language="JavaScript" src="../swscripts.js"></script>
+<script language="JavaScript">
+<!--
+// Run finishDocument() function when the document loads. Trap error after printing multiple topics in HTML Help, when it can't find JS file & style sheet
+function runOnLoadFunctions() {
+//	window.onerror = trapError	// when you get an error, run the trapError function
+	finishDocument()	// run the functions to finish the document
+}
+
+// Set the text to be visible before printing
+function runBeforePrint() {
+	body.style.visibility = 'visible'	// make body visible for printing
+}
+
+// Stop error messages appearing
+//function trapError() {
+//	return true	// do nothing: this stops an error message appearing
+//}
+// -->
+</script>
+</head>
+<body id="body" style="visibility: 'hidden'" onBeforePrint="runBeforePrint()" onLoad="runOnLoadFunctions()">
+
+<!-- This object holds all the keywords for this topic -->
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<!-- ALink Names -->
+	<param name="ALink Name" value="Changing options: Meal menu">
+	<!-- Index Keywords -->
+	<param name="Keyword" value="options">
+</object>
+
+<!-- Expand All Text Form -->
+<form name="form1">
+<span id="checkboxLabel" class="label"><input type="checkbox" name="ShowAll" accesskey="x" onClick="if (this.checked) {showAllText(); blur()} else {hideAllText(); blur()}">&nbsp;E<span class="accesskey">x</span>pand all text</span>
+<hr></form>
+
+<H1>Changing options: Meal menu</H1>
+
+<P>Specify the initial vegetarian status and user name for the <B>Meal menu</B> dialog box. 
+   If Vegetarian? is checked then the sausage and bacon items are disabled.</P>
+
+<p>To reset the settings to the values when you started the application, click <B>Use Defaults</B>.</P>
+
+<!-- Related Topics -->
+<p><hr><object id="hhctrl" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
+	<param name="Command" value="ALink,menu">
+	<param name="Button" value="">
+	<param name="Flags" value="1">
+	<param name="Item1" value="">
+	<param name="Item2" value="Changing options">
+	<param name="Item3" value="Activate meal menu">
+	<param name="Item4" value="Meal menu dialog">
+</object>
+<span class="label">&nbsp;&nbsp;Related topics</span></p>
+
+
+</BODY>
+</HTML>

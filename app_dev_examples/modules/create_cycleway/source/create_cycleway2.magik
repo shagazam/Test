@@ -1,0 +1,147 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package sw
+$
+#
+# my_first_plugin phase 2
+# -----------------------
+#
+# Enhances my_first_plugin to create RWOs in the database using
+# dataset transactions.
+#
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_private _method create_cycleway_plugin.init_actions()
+    ## define two new actions. One creates a new road from the
+    ## trail. The second creates many roads in one transaction.
+
+    _self.add_action( sw_action.new( :new_geom,
+				     :engine, _self,
+				     :caption, "Create geometry",
+				     :action_message, :new_geom|()|,
+				     :enabled?, _false ))
+    
+    _self.add_action( sw_action.new( :new_road,
+				     :engine, _self,
+				     :caption, "Create a road",
+				     :action_message, :new_road|()|,
+				     :enabled?, _false ))
+    
+    _self.add_action( sw_action.new( :create_roads,
+				     :engine, _self,
+				     :caption, "Create roads",
+				     :action_message, :create_roads|()|,
+				     :enabled?, _false ))
+
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method create_cycleway_plugin.sw_databus_data_available( data_type_name, data )
+    ## enable the new_road action only when there is a suitable trail	##
+    
+    _if data_type_name _is :map_trail
+    _then
+	( source, a_trail ) << ( _scatter data )
+	.trail << a_trail
+	
+	_self.action( :new_geom ).enabled? << a_trail _isnt _unset _andif
+					      _not a_trail.empty? 
+	_self.action( :new_road ).enabled? << a_trail _isnt _unset _andif
+					      _not a_trail.empty?
+    _endif
+    
+_endmethod
+$
+
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method create_cycleway_plugin.new_road()
+    ##
+    ## action method for the new_road action.
+    ##
+    ## Creates a road rwo in the datatabase.
+    ##
+    _if .trail _isnt _unset _andif _not .trail.empty? 
+    _then 
+	
+	a_collection << _self.application.database.collection( :gis, :min_road )
+	fd << a_collection.field( :centre_line )
+	
+	a_geom << .trail.make_proposed_geometry_for_field( fd, a_collection )
+
+	values << property_list.new_with( :name, "test",
+					  :road_type, "Cycle Way",
+					  :carriage_type, "Single Carriage",
+					  :centre_line, a_geom )
+	
+	t << record_transaction.new_insert( a_collection, values, "Insert Road" )
+	t.run()
+	.trail.clear()
+
+    _endif 
+    
+_endmethod  
+$
+
+# enable the create_roads action when there are geometries
+# in the .geoms geometry set:
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method create_cycleway_plugin.new_geom()
+    ##
+    ## Action method for the new_geom action.
+    ##
+    ## Creates and stores proposed geometry for a field, collection
+    ## and dataset from the current trail.
+    ##
+
+    _if .trail _isnt _unset _andif _not .trail.empty? 
+    _then 
+	a_collection << _self.application.database.collection( :gis, :min_road )
+	fd << a_collection.field( :centre_line )
+	
+	a_geom << .trail.make_proposed_geometry_for_field( fd, a_collection )
+	
+	a_geom.style_info << line_style.new( colour.called( :pink ), 4 )
+	.geoms.add( a_geom )
+	
+	_self.action( :create_roads ).enabled? << _true
+	
+	.trail.clear()
+	
+	# draw the geometry on all appropriate maps
+	_self.databus_make_data_available( :geometry_to_draw, {a_geom} )
+    _endif
+    
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method create_cycleway_plugin.create_roads()
+    ## 
+    ## Create a road for each in-memory geometry.
+    ##
+
+    record_transactions << rope.new()
+    _for a_geom _over .geoms.elements()
+    _loop
+	values << property_list.new_with( :name, "test",
+					  :road_type, "Cycle Way",
+					  :carriage_type, "Single Carriage",
+					  :centre_line, a_geom )
+	a_collection << _self.application.database.collection( :gis, :min_road )
+	t << record_transaction.new_insert( a_collection, values, "Insert Cycle Way" )
+	record_transactions.add_last( t )
+    _endloop
+    
+    dataset_transaction.new( record_transactions, "Insert multiple roads").run()
+    .geoms.empty()
+    _self.action( :create_roads ).enabled? << _false
+    
+_endmethod
+$
+

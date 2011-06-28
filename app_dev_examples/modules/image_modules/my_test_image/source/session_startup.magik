@@ -1,0 +1,114 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package sw
+$
+#
+# Session startup file for Application Development Example
+# Designed for loading into a session with an open Cambridge
+# database. 
+_package user
+
+_block
+	_local root_dir, ds_dir
+	# these globals moved to make_open file
+	# _global images_dir, image_name, internal_image_name
+	
+	# Since we can't use an absolute path we
+	# have to derive one from the location of this file.
+
+	root_dir << !current_module!.product.directory
+
+	# Make sure we load any patches.
+	# sw!update_image()
+
+	# Supply the datastore directory - not needed here
+	ds_dir << "..\cambridge_db\ds\ds_admin"
+
+	# This will ensure that a method finder file will be saved
+	# along with the image.
+	method_finder.lazy_start?
+
+	# set the product name and title for smallworld_product -
+	# used for labelling the session
+	smallworld_product.init( "app_dev_test",
+					 "Smallworld Application Development Test" )
+
+	# Set the startup option
+	# :save_open_iamge is only applicaable if we were saving a
+	# closed image and wanted it to created an open image the first
+	# time time it was started.
+	smallworld_product.set_startup_option(:save_open_image?, _false)
+
+	# Since :save_open_image? has been set to false the following
+	# options are irrelevant.
+	# :open_image_name
+	# :save_open_image_options
+	# :save_open_startup_proc
+	# :update_redirector
+
+	# :ds_environment_options can be used to specify options to be
+	# passed to ds_environment.init(), we shall set it to an empty vector
+	smallworld_product.set_startup_option(:ds_environment_options, {})
+
+	# Set the authorisation to :none if you don't want to force
+	# users to log in.
+	# By default authorisation is set to :singleuser
+	# smallworld_product.set_startup_option(:authorisation, :none)
+
+	# Set the soc definition to use by default
+	smallworld_product.set_startup_option(:soc, :gis)
+
+	#As we require gui_2 to be loaded it should not be necessary to
+	# set the :ace option
+
+	# :ace_top_alternative can specifies the alternative in the ACE
+	# used as a parent for users' alternatives.
+	smallworld_product.set_startup_option(:ace_top_alternative, _unset)
+
+	# :style_top_alternative is like :ace_top_alternative but for
+	# the style system
+	smallworld_product.set_startup_option(:style_top_alternative, "|")
+
+	# We want the applicatiojn manager to start by default, so we'll
+	# set :application to unset
+	smallworld_product.set_startup_option(:application, _unset)
+
+	# We set the interactive option to false before we open the
+	# database so that we can build this image from a batch script
+	# We set this to true afterwards.
+	  smallworld_product.set_startup_option(:interactive?, _false)
+	# smallworld_product.set_startup_option(:interactive?, _true)
+	#Open the database
+	_if auth_view.alternative_control_enabled? _is _maybe _then 
+		auth_view.alternative_control_enabled? << _false
+	_endif
+	# assume database is already open 
+	smallworld_product.open_database(ds_dir)
+
+	# We'll set the interactive option to true so the user can log in
+	smallworld_product.set_startup_option(:interactive?, _true)
+	
+	# clear any existing activity registrations
+	#	smallworld_product.clear_activities()
+	# register test activity
+	smallworld_product.register_application(
+	    :my_professional,
+	    :application,
+	    :resource_module_name, :my_professional_application,
+	    :description,
+	    "My Professional application using application framework architecture",
+	    :external_name, "My Professional - Smallworld Core",
+	    :html_help_file_name, "exampleApp",
+	    :html_help_resource_module_name, :my_professional_application,
+	    :ace_name, :default  ) 
+	
+	# Set the startup procedure as we may not have started from a
+	# gis image.
+	smallworld_product.set_startup_procedures(start_application_manager)
+	
+_endblock
+$

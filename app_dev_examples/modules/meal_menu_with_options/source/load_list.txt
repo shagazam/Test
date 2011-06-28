@@ -1,0 +1,4 @@
+meal_menu_options_panel
+meal_menu_with_options_plugin
+meal_menu_with_options_dialog
+

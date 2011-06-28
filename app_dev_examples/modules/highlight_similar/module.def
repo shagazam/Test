@@ -1,0 +1,6 @@
+highlight_similar	1
+
+description
+	Plugin to highlight geometries in an area given by the trail
+end
+

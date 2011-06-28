@@ -1,0 +1,144 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package sw
+$
+#
+# create_cycleway
+# ---------------
+#
+# A plugin which creates in-memory geometry from the trail and
+# renders it on maps.
+#
+_pragma(classify_level=debug, topic={application_development_exeamples})
+def_slotted_exemplar( :create_cycleway_plugin,
+## A plugin which creates in-memory geometry from the trail and
+## renders it on maps.
+{
+    { :trail, _unset },
+    { :geoms, _unset }
+},
+:plugin )
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_private _method create_cycleway_plugin.init( name, owner, _gather args )
+    ##
+    ## Initialise slots.
+    ##
+    
+    _super.init( name, owner, _scatter args )
+    .geoms << equality_geometry_set.new()
+    
+    >> _self
+    
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+## register with the databus as a consumer of map_trail data
+create_cycleway_plugin.define_shared_constant( :databus_consumer_data_types,
+					       { :map_trail },
+					       :public )
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method create_cycleway_plugin.sw_databus_data_available( data_type_name, data )
+    ## 
+    ##  Reacts upon information being put on the databus.
+    ## 
+
+    _if data_type_name _is :map_trail
+    _then
+	( source, a_trail ) << ( _scatter data )
+	.trail << a_trail
+	
+	_self.action( :new_geom ).enabled? << a_trail _isnt _unset _andif
+					      _not a_trail.empty? 
+    _endif
+    
+_endmethod
+$
+
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_private _method create_cycleway_plugin.init_actions()
+    ## 
+    ## Defines the plugin's actions.
+    ##    
+    ## :new_geom
+    ##
+    ## creates and stores an in-memory geometry derived from the
+    ## current trail
+    ##
+    _self.add_action( sw_action.new( :new_geom,
+				     :engine, _self,
+				     :caption, "Create geometry",
+				     :action_message, :new_geom|()|,
+				     :enabled?, _false ))
+    
+_endmethod
+$
+
+# register as a databus producer
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+## register as a databus producer
+##
+## :geometry_to_draw
+##
+## Produces this to draw in-memory geometries on maps
+##
+## :post_render_sets
+##
+## Produces a geometry_set on request for drawing on a map
+## after it has been rendered.
+##						   ##
+create_cycleway_plugin.define_shared_constant( :databus_producer_data_types,
+					       {
+						   :geometry_to_draw,
+
+						   :post_render_sets
+					       },
+					       :public )
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method create_cycleway_plugin.new_geom()
+    ##
+    ## Action methond for the new_geom action.
+    ##
+    ## Creates and stores a new geometry from the current trail.
+    ##
+
+    _if .trail _isnt _unset _andif _not .trail.empty? 
+    _then 
+	a_geom << .trail.as_pseudo_geometry
+	a_geom.style_info << line_style.new( colour.called( :pink ), 4 )
+	.geoms.add( a_geom )
+
+	.trail.clear()
+
+	# draw the geometry on all appropriate maps
+	_self.databus_make_data_available( :geometry_to_draw, {a_geom} )
+    _endif
+    
+_endmethod
+$
+
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method create_cycleway_plugin.sw_databus_data_requested( data_type_name )
+    ## 
+    ## Handles databus requests for post_render_sets.
+    ##
+
+    >> _if data_type_name _is :post_render_sets
+       _then 
+	   >> .geoms
+       _endif 
+_endmethod
+$

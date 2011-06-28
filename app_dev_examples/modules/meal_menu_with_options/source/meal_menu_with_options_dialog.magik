@@ -1,0 +1,175 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package user
+
+_pragma(classify_level=debug, topic={application_development_examples}, usage={internal})
+##
+## This is a simple demonstration GUI that illustrates some
+## aspects of building a User Interface in Magik
+## Notes:
+## 1	the exemplar inherits from model, subclassing the
+##      activate_in() method to build the actual User Interface.
+## 2	The GUI controls are positioned using a rowcol "layout
+##      manager". rowcol gives the most control over laying out
+##      GUI components.
+## 3    Each GUI control is stored in a property_list. The control
+##      is accessed when the value is required.
+## 4    The enabled state of some controls is determined by the
+##      value of the "vegetarian" toggle. The change_selector
+##      and the use of the :enabled_state_aspect controls the
+##      enabling and disabling of certain controls. 
+## 5    The demo does NOT make use of the message database,
+##      whilst this is bad practice, it does simplify the
+##      code somewhat.
+## 6	To display the menu, load this file and then execute:
+##		MagikSF> meal_menu.open()
+##              or
+##              MagikSF> meal_menu.open_dialog(some_parent)
+##
+def_slotted_exemplar(:meal_menu,
+{
+    {:items , _unset },
+    {:plugin, _unset }
+},
+:model)
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.new(plugin)
+    ## Create and return a new dialog
+    ## Owning plugin supplies itself as parameter
+    ## so that the dialog can access current values 
+    ## of user-settable options
+    >> _clone.init(plugin)
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.init(plugin)
+    ## Create a property list to hold the items.
+    _super.init()
+    .items << property_list.new()
+    .plugin << plugin
+    >> _self
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.build_gui(container)
+    ##  Builds the GUI in A_CONTAINER.
+    .top_frame << container.top_frame
+    >> _self.activate_in(container)
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.activate_in(a_frame)
+    ## Create the GUI controls used by _self.
+    # Create a container rowcol to lay out the children
+    rc << rowcol.new(a_frame, _unset , 1, _unset )
+    rc.style << :top_level
+
+    # Create the actual Components
+    .items[:name] << text_item.new(rc,"Name", :value, .plugin.user_name)
+    .items[:vegetarian] << toggle_item.new(rc,"Vegetarian", :model, _self,
+					   :value, .plugin.veg?,
+					   :change_selector, :|set_vegetarian_status()| )
+    s << panel_separator.new(rc, :col_alignment , :fill )
+    .items[:hunger] << slider_item.new(rc,"Hunger",1,10, :value,5)
+    .items[:sausages] << toggle_item.new(rc,"Sausages", :model, _self,
+					 :enabled_state_aspect, :|meat_eater?| )
+    .items[:bacon] << toggle_item.new(rc,"Bacon", :model, _self,
+				      :enabled_state_aspect, :|meat_eater?| )
+    .items[:eggs] << toggle_item.new(rc,"Eggs")
+    .items[:chips] << radio_group_item.new(rc,"Chips", :items, {"None","Small","Medium","Large"})
+    _self.set_vegetarian_status(.plugin.veg?)
+    # Create a "button box"
+    bb << rowcol.new(rc, _unset , 3)
+    bb.style << :button_box
+    bb.col_alignment << :right
+    ok << button_item.new(bb,"OK",_self,:|doit()|, :min_width, 75)
+    cn << button_item.new(bb,"Cancel",_self,:|quit()|, :min_width , 75)
+    hp << button_item.new(bb,"Help",_self,:|help()|, :min_width , 75)
+    _self.register_action_buttons( ok, cn, hp )
+    >> rc
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.on_activation()
+    ##
+    ## Whenever the sub-dialog is activated or reactivated,
+    ## it refreshes the values of the controls to reflect
+    ## the current state of the options.
+    ##
+    .items[:vegetarian].value << .plugin.veg? 
+    .items[:name].value << .plugin.user_name
+    _self.set_vegetarian_status(.plugin.veg?)
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.set_vegetarian_status(value)
+    ## Gets called when the user toggles the "Vegetarian"
+    ## toggle. The method changes the :meal_eater? aspect of _self
+    ## This means that the GUI controls that have have this aspect
+    ## as their :enabled_state_aspect will be enabled or disabled. 
+    _self.changed(:meat_eater?, _not value)
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.name
+    ## Returns the name of the person ordering the meal
+    >> .items[:name].value
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.hunger
+    ## Returns the level of hunger selected
+    >> .items[:hunger].value
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.chips
+    ## Returns the size of the chips ordered
+    >> .items[:chips].value
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.bacon?
+    ## Returns a flag indicating whether the user selected bacon
+    >> .items[:bacon].value
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.sausages?
+    ## Returns a flag indicating whether the user selected sausages
+    >> .items[:sausages].value
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.eggs?
+    ## Returns a flag indicating whether the user selected eggs
+    >> .items[:eggs].value
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.doit()
+    ## Write out the order given.
+    write("menu for ",_self.name)
+    write("hunger: ",_self.hunger)
+    _if _self.bacon? _then write("bacon") _endif
+    _if _self.sausages? _then write("sausages") _endif
+    _if _self.eggs? _then write("eggs") _endif
+    write("chips: ",_self.chips)
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu.help_wanted(id)
+    .plugin.help_wanted(id.default(985))
+_endmethod
+$

@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Smallworld Core Spatial Technology Help</title>
+<link rel="stylesheet" type="text/css" href="../swstyles.css">
+<script language="JavaScript" src="../swscripts.js"></script>
+<script language="JavaScript">
+<!--
+// Run finishDocument() function when the document loads. Trap error after printing multiple topics in HTML Help, when it can't find JS file & style sheet
+function runOnLoadFunctions() {
+	window.onerror = trapError	// when you get an error, run the trapError function
+	finishDocument()	// run the functions to finish the document
+}
+
+// Set the text to be visible before printing
+function runBeforePrint() {
+	body.style.visibility = 'visible'	// make body visible for printing
+}
+
+// Stop error messages appearing
+function trapError() {
+	return true	// do nothing: this stops an error message appearing
+}
+// -->
+</script>
+</head>
+<body id="body" style="visibility: 'hidden'" onBeforePrint="runBeforePrint()" onLoad="runOnLoadFunctions()">
+
+<!-- This object holds all the keywords for this topic -->
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+	<!-- ALink Names -->
+	<param name="ALink Name" value="Smallworld Core Spatial Technology Help">
+	<!-- Index Keywords -->
+
+</object>
+
+<img border=0 src="shared/swcore.gif" usemap="#html_help"> 
+<map name="html_help">
+  <area shape="rect" coords="40,300,238,355" href="SWCopyright.htm" alt="Trademark and copyright information">
+</map>
+
+</body>
+</html>

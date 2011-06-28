@@ -1,0 +1,31 @@
+<!-- config.xml for the SWAF Professional Application -->
+<config base="cam_db_swaf_professional_application.config">
+
+
+       <plugins>
+
+        
+	<plugin name="meal_menu" class_name="meal_menu_plugin">
+	</plugin> 
+	<plugin name="highlight_similar" class_name="highlight_similar_plugin">
+	</plugin>
+	<plugin name="create_cycleway" class_name="create_cycleway_plugin">
+	</plugin>  
+	<plugin name="options" class_name="options_plugin">
+	    <panels>
+                <panel name="maps.view_defaults"/>
+                <panel name="maps.view_interaction"/>
+                <panel name="maps.grid_and_snaps"/>
+                <panel name="maps.topology"/>
+		<panel name="drafting.drafting"/> 
+		<panel name="dimensioning.dimension"/>
+                <panel name="object_control.object_control"/>
+		<panel name="maps.geometry_calculations"/>
+                <panel name="versions.version_management"/>
+                <panel name="versions.datasets_status"/>
+		<panel name="plotting.layout"/> 
+            </panels>
+        </plugin>
+
+    </plugins>
+</config>

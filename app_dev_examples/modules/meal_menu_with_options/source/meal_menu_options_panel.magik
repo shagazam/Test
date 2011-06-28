@@ -1,0 +1,93 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package user
+
+_pragma(classify_level=debug, topic={application_development_examples}, usage={internal})
+## Options panel for the meal menu plugin
+def_slotted_exemplar( :meal_menu_options_panel,
+{ { :plugin, _unset} },
+:options_panel )
+$
+_pragma(classify_level=debug, topic={application_development_examples}, usage={internal})
+## Defines the help topic for this meal_menu_options_panel
+meal_menu_options_panel.define_shared_constant(:default_html_help_id,986,_true)
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_options_panel.init( plugin )
+    ##
+    ## Initialise the options panel pane; set .plugin
+    ##
+    _super.init()
+    .plugin << plugin
+    >> _self
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_options_panel.activate_in(parent)
+    ##
+    ## Builds the GUI in parent
+    ##
+    rc << rowcol.new( parent, 2, 2, :pixel,
+		      :style, :group_box,
+		      :resize?, _true,
+		      :model, _self,
+		      :help_id, _self.default_html_help_id )
+
+    .items[:vegetarian] << toggle_item.new( rc, "Vegetarian?",
+					    :row, 1, :col, 1,
+					    :identifier, :vegetarian )
+    
+    lw << label_item.new(rc, "", :row, 2, :col, 1)
+    .items[ :user_name ] << text_item.new( rc, "User name",
+					   :label_item,lw,
+					   :display_length, 10,
+					   :row, 2, :col, 2 )
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_options_panel.on_activation()
+    ##
+    ## Whenever the sub-dialog is activated or reactivated,
+    ## it refreshes the values of the controls to reflect
+    ## the current state of the options.
+    ##
+    .items[:vegetarian].value << .plugin.veg? 
+    .items[:user_name].value << .plugin.user_name
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_options_panel.apply()
+    ##
+    ## Inform the plugin of new settings
+    ##
+    .plugin.veg? << .items[:vegetarian].value  
+    .plugin.user_name << .items[:user_name].value 
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_options_panel.caption
+    ##
+    ## Returns the caption
+    ##
+    # >> _self.message(:caption)
+    >> "Meal menu example"
+    
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_options_panel.help_wanted(_optional id)
+    ## 
+    ## Display the HTML help for ID.
+    ## 
+    .plugin.help_wanted(id.default(_self.default_html_help_id))
+_endmethod
+$

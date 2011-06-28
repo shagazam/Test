@@ -1,0 +1,94 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 or later
+Compiled file=exampleApp.chm
+Contents file=exampleApp.hhc
+Default Window=$global_exampleApp
+Default topic=topics\Start.htm
+Display compile progress=Yes
+Error log file=exampleApp.log
+Full-text search=Yes
+Index file=exampleApp.hhk
+Language=0x409 English (United States)
+Title=Example Application
+
+[WINDOWS]
+$global_exampleApp="Smallworld Core Help - Example Application","exampleApp.hhc","exampleApp.hhk","topics\Start.htm","topics\Start.htm","ms-its:swgloss.chm::/topics\Glossary.htm","Glossary","ms-its:swhelp.chm::/topics\UsingTheHelp.htm","Help",0x23520,250,0xc380e,[150,150,1094,741],,,1,,,,0
+
+[FILES]
+topics\shared\arrowdn.gif
+topics\shared\diamond.gif
+topics\SWCopyright.htm
+topics\Start.htm
+
+[ALIAS]
+#include exampleApp.ali
+
+[MAP]
+#include exampleApp.h
+
+[MERGE FILES]
+swworking.chm
+swoption.chm
+swviewoption.chm
+swsnapoption.chm
+swdraftoption.chm
+swdimoption.chm
+swconsoption.chm
+swtopoption.chm
+swobjctrloption.chm
+swsysoption.chm
+swvmgtoption.chm
+swdsstatusoption.chm
+swquicklayoutoption.chm
+swvmgt.chm
+swview.chm
+swreforigin.chm
+swviewprop.chm
+swbookmarks.chm
+swrotateview.chm
+swobjectcontrol.chm
+swthemes.chm
+swobject.chm
+sweditobjects.chm
+sweditgeom.chm
+swtransforms.chm
+swtopology.chm
+swtopeditors.chm
+swdrafting.chm
+swdimensions.chm
+swconstructions.chm
+swtrail.chm
+swtrailprop.chm
+swsnaps.chm
+swexplorer.chm
+swfind.chm
+swscrap.chm
+swquery.chm
+swquerywizard.chm
+swqueryscript.chm
+swqueryconstruct.chm
+swanaly.chm
+swrasters.chm
+swtins.chm
+swlayouts.chm
+swlayoutdesigner.chm
+swquicklayout.chm
+swpublishlayout.chm
+swstylewidgets.chm
+swgloss.chm
+swhelp.chm
+swappmgr.chm
+swactions.chm
+swqueryactions.chm
+sweditactions.chm
+swdelobjects.chm
+swselobjects.chm
+swobjectview.chm
+swoverview.chm
+swcolumns.chm
+examplePlugin.chm
+exampleOptions.chm
+
+[INFOTYPES]
+

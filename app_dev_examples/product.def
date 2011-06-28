@@ -1,0 +1,5 @@
+apps_dev layered_product
+title
+	The example product for the Application Development Documentation
+end
+version 4.1.0

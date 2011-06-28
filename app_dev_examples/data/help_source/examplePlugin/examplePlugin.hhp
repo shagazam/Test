@@ -1,0 +1,30 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 or later
+Compiled file=examplePlugin.chm
+Contents file=examplePlugin.hhc
+Default Window=$global_examplePlugin
+Default topic=topics\example_dialog.htm
+Display compile progress=Yes
+Error log file=examplePlugin.log
+Full-text search=Yes
+Index file=examplePlugin.hhk
+Language=0x409 English (United States)
+Title=User Interface Example
+
+[WINDOWS]
+$global_examplePlugin="Smallworld Core Help - User Interface Example","examplePlugin.hhc","examplePlugin.hhk","topics\example_dialog.htm","topics\example_dialog.htm","ms-its:swgloss.chm::/topics\Glossary.htm","Glossary","ms-its:swhelp.chm::/topics\UsingTheHelp.htm","Help",0x23520,250,0xc300e,[150,150,1087,729],,,1,,,,0
+
+
+[FILES]
+topics\example_actions.htm
+topics\example_dialog.htm
+
+[ALIAS]
+#include examplePlugin.ali
+
+[MAP]
+#include examplePlugin.h
+
+[INFOTYPES]
+

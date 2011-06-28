@@ -1,0 +1,29 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 or later
+Compiled file=exampleOptions.chm
+Contents file=exampleOptions.hhc
+Default Window=$global_exampleOptions
+Default topic=topics\example_options.htm
+Display compile progress=Yes
+Error log file=exampleOptions.log
+Full-text search=Yes
+Index file=exampleOptions.hhk
+Language=0x409 English (United States)
+Title=User Interface Example Options
+
+[WINDOWS]
+$global_exampleOptions="Smallworld Core Help - User Interface Example Options","exampleOptions.hhc","exampleOptions.hhk","topics\example_options.htm","topics\example_options.htm","ms-its:swgloss.chm::/topics\Glossary.htm","Glossary","ms-its:swhelp.chm::/topics\UsingTheHelp.htm","Help",0x23520,250,0xc300e,[150,150,1087,729],,,1,,,,0
+
+
+[FILES]
+topics\example_options.htm
+
+[ALIAS]
+#include exampleOptions.ali
+
+[MAP]
+#include exampleOptions.h
+
+[INFOTYPES]
+

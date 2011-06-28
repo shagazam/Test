@@ -1,0 +1,123 @@
+<html>
+<head>
+<style type="text/css">
+<!-- 
+	/* This BODY entry sets up the page's background colour, */
+	/* and the font settings that all the other text tags inherit */
+	/* (the font setting can be overridden on a per-tag basis, */
+	/* such as in the heading style definitions */
+	body		    { background-color: White;
+				color: Black;
+				font: 10pt Arial, sans-serif; }
+
+	/* These three set up the colours for hyperlinks */
+	a:link	    { color: Blue; }
+	a:visited	    { color: Purple; }
+	a:active	    { color: Purple; }
+
+	/* These next three set the spacing around lists to zero so */
+	/* that the paragraph spacing is set by the LI, DT or DD tags */
+	dl, ul, ol	    { margin-top: 0pt;
+				margin-bottom: 0pt; }
+
+	/* Now for the heading tags */
+	h1, h2, h3, h4  { color: Navy; 
+						font-weight: bold; }
+	h1		    { font-size: 14pt;
+				margin-top: 5pt;
+				margin-bottom: 20pt; }
+	h2		    { font-size: 12pt;
+				margin-top: 30pt;
+				margin-bottom: 15pt; }
+	h3		    { font-size: 11pt;
+				margin-top: 30pt;
+				margin-bottom: 11pt; }
+	h4		    { font-size: 10pt;
+				margin-top: 17pt;
+				margin-bottom: 11pt; }
+
+	/* This is the paragraph tag */
+	p		    { margin-top: 11pt;
+				margin-bottom: 5pt; }
+
+	/* These are the two bullet tags */
+	li.bullet	    { list-style-image: none;
+				list-style-type: disc;
+				margin-top: 5pt;
+				margin-bottom: 3pt;
+				margin-left: -10pt; }
+	li.diamond	    { list-style-image: url(topics/shared/diamond.gif);
+				margin-top: 3pt;
+				margin-bottom: 3pt;
+				margin-left: -10pt; }
+
+	/* These are the two number tags */
+	li.number	    { list-style-image: none;
+				margin-top: 5pt;
+				margin-bottom: 3pt;
+				margin-left: -10pt; }
+	li.letter	    { list-style-image: none;
+				list-style: lower-alpha;
+				margin-top: 3pt;
+				margin-bottom: 3pt;
+				margin-left: -10pt; }
+
+	/* The indent tag */
+	p.indent	    { margin-top: 3pt;
+				margin-bottom: 3pt; }
+	
+	/* These are the two definition list tags */
+	dt		    { margin-top: 11pt; 
+				margin-bottom: 5pt; }
+	dd		    { margin-top: 3pt;
+				margin-bottom: 3pt; }
+
+	/* These are the table tags */
+	caption		    { font: italic 10pt Arial, sans-serif; }
+	th		    { font: bold 10pt Arial, sans-serif; 
+				margin-top: 3pt;
+				margin-bottom: 3pt; }
+	td		    { font: 10pt Arial, sans-serif;
+				margin-top: 3pt; 
+				margin-bottom: 3pt; }
+
+	/* These are the preformatted text tag */
+	pre		    { font-family: "Courier New", monospace;
+ 				color: Brown;
+				margin-top: 3pt;
+				margin-bottom: 3pt; }
+	code		    { font-family: "Courier New", monospace; 
+				color: Brown; }
+
+	/* Formats for check box and related topics */
+	span.label	    { font-size: 8pt; }
+	span.disabledlabel	    { font-size: 8pt;
+				color: Gray; }
+	span.accesskey	    { text-decoration: underline; }
+
+	/* Format for text indicating expanding section */
+	span.expand     {	color: Green;
+				cursor: hand; }
+
+	/* This sets up the format for expanded text from headers with arrows */
+	div.expanded    {	padding-left: 4pt;
+				border-left: 1pt solid Green; }
+
+	/* This sets up the format for expanded pictures */
+	div.picexpanded {	background-color: LightCyan;
+				width: 90%;
+				padding-left: 4pt;
+				padding-top: 4pt;
+				padding-bottom: 10pt; }
+
+	/* This sets up the format for expanded commands */
+	div.commandexpanded { padding-left: 4pt;
+				width: 90%;
+				padding-top: 4pt;
+				padding-bottom: 4pt;
+				background-color: LightCyan; }
+
+-->
+</style>
+</head>
+</html>

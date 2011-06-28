@@ -1,0 +1,52 @@
+<?xml version="1.0" standalone="yes"?>
+<gui base="cam_db_swaf_professional_application.gui">
+
+
+
+    <!-- MENUBAR -->
+
+    <menu name="menubar" type="menubar">
+	<submenu name="file"/>
+	<submenu name="edit"/>
+	<submenu name="view"/>
+	<submenu name="trail"/>
+	<submenu name="tools"/>
+	<submenu name="window"/>
+
+	<submenu name="extras">
+		<action name="meal_menu.activate_meal_menu"/>
+		<action name="highlight_similar.filter_to_trail"/>
+		<action name="create_cycleway.new_geom"/>
+		<action name="create_cycleway.new_road"/>
+		<action name="create_cycleway.create_roads"/>
+	</submenu>
+
+	<submenu name="help"/>
+
+
+	
+    </menu> <!-- menubar -->
+
+
+    
+
+	<toolbar name="extras">
+		<action name="meal_menu.activate_meal_menu"/>
+		<action name="highlight_similar.filter_to_trail"/>
+		<action name="create_cycleway.new_geom"/>
+		<action name="create_cycleway.new_road"/>
+		<action name="create_cycleway.create_roads"/>
+	</toolbar>
+
+
+    <dock name="top">
+	<toolbar name="interaction"/>
+	<toolbar name="refresh"/>
+	<toolbar name="navigation"/>
+	<toolbar name="advanced_find"/>
+	<section/>
+	<toolbar name="view"/>
+	<toolbar name="objects"/>
+	<toolbar name="extras"/>
+    </dock>
+</gui>

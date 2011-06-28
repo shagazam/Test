@@ -1,0 +1,121 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package user
+_pragma(classify_level=restricted, topic={apps_dev_course})
+##
+## This is a simple plugin to activate a dialog box 
+## based on class model.
+##
+# Define the plugin class
+def_slotted_exemplar( :meal_menu_plugin,
+{ {:user_name, _unset },
+  {:veg?, _false} },
+:plugin )
+$
+# Provide write access to slots for use by options panel
+_pragma(classify_level=debug, topic={application_development_examples})
+meal_menu_plugin.define_slot_access(:user_name, :writable)
+_pragma(classify_level=debug, topic={application_development_examples})
+meal_menu_plugin.define_slot_access(:veg?, :writable)
+$
+# Create an action
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_plugin.init_actions()
+    ## Create the plugin's action
+    _self.add_action(
+	sw_action.new( :activate_meal_menu,
+		       :engine, _self,
+		       :image, {:activate,:ui_resources},
+		       :help_id, 987,
+		       :action_message, :activate_meal_menu|()| ) )
+_endmethod
+$
+# Define plugin properties
+_pragma(classify_level=debug, topic={application_development_examples})
+## X offset used for dialog activation
+meal_menu_plugin.def_property( :x_offset,
+			       :type, :integer, :default_value, 0,
+			       :description, "X offset used for dialog activation" )
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+## Y offset used for dialog activation
+meal_menu_plugin.def_property( :y_offset,
+			       :type, :integer, :default_value, 0,
+			       :description, "Y offset used for dialog activation" )
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+## Method for the plugin to activate the dialog box
+## A new dialog box is created only if one is not
+## already cached 
+_method meal_menu_plugin.activate_meal_menu()
+    name << :meal_menu
+    _if (d << _self.get_dialog( name ) ) _is _unset
+    _then
+	# Create and cache the dialog
+	# supply _self as parameter so dialog can update itself with
+	# user-settable options
+	d << meal_menu.new_dialog( _self.top_frame, _self )
+	_self.cache_dialog( name, d )		
+    _endif
+    d.activate_relative_to( _self.message(:frame_title), _self.top_frame,
+			    _self.x_offset, _self.y_offset )
+    >> d
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+## Method for the plugin to embed the dialog box
+## in a supplied container
+_method meal_menu_plugin.build_gui(container)
+    d << meal_menu.new( _self )
+    gui << d.build_embedded_gui(container)
+    #   gui << d.build_gui(container)
+    gui.tab_label << _self.message(:tab_title)
+    >> gui
+_endmethod
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_plugin.options_panel( name )
+    ##
+    ## Create the option panel as identified by NAME.
+    ## 
+    _if name _is :meal_menu
+    _then
+	_return meal_menu_options_panel.new(_self)
+    _else
+	# No such panel.
+	_return _unset
+    _endif
+_endmethod
+$
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_plugin.set_preferences(preferences)
+    ##
+    ## Initialise the user-settable options and 
+    ## set them from PREFERENCES if available.
+    ## 
+    _self.user_name << system.user_name
+    _self.veg? << _false
+    _if preferences _isnt _unset
+    _then
+	# Assume that preferences is a property_list
+	# set defaults if necessary
+	_self.user_name << preferences[:user_name].default(system.user_name)
+	_self.veg? << preferences[:veg].default(_false)
+    _endif
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_examples})
+_method meal_menu_plugin.get_preferences()
+    ## 
+    ## Return the example_plugin's preferences.
+    ## 
+    prefs << property_list.new_with(:user_name, _self.user_name,
+				    :veg, _self.veg? )
+    >> prefs
+_endmethod
+$

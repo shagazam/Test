@@ -1,0 +1,14 @@
+my_test_image 1
+
+description
+	Top level module for gui application framework image
+end
+
+requires
+	cam_db_engines
+	my_professional_application 2
+	cam_db_swaf_professional_application
+end
+
+language en_gb
+

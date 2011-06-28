@@ -1,0 +1,11 @@
+my_professional_application	2
+
+description
+	Customised professional application based on Application Framework architecture
+end
+
+requires
+	meal_menu_with_options
+	highlight_similar
+	create_cycleway
+end 

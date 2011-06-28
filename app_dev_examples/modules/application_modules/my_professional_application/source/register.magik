@@ -1,0 +1,18 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package sw
+
+smallworld_product.register_application(
+    :my_professional,
+    :application,
+    :resource_module_name, :my_professional_application,
+    :description, "Professional application using application framework architecture",
+    :external_name, "My Professional",
+    :html_help_file_name, "exampleApp",
+    :ace_name, :default )
+$
+

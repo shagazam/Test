@@ -1,0 +1,99 @@
+#% text_encoding = iso8859_1
+# ************************************************************ 
+#							       
+# (c) 2005-2006 General Electric Company. All Rights Reserved. 
+#							       
+# ************************************************************ 
+_package sw
+$
+_pragma(classify_level=debug, topic={application_development_exeamples})
+       ## Plugin to demonstrate use of geometry sets.
+       def_slotted_exemplar(:highlight_similar_plugin,
+       {
+			 {:current_rwo_set, _unset, :readable},
+			 {:current_trail, _unset, :readable}
+       },
+       :plugin
+       )
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+##  The various consumer types this plugin reacts on when data
+##  is put on the databus.
+highlight_similar_plugin.define_shared_constant( :databus_consumer_data_types,
+				      { :record_selection, :map_trail },
+				      :public )
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+##  The various types this plugin puts on the databus.
+highlight_similar_plugin.define_shared_constant( :databus_producer_data_types,
+				      { :geometry_to_highlight },
+				      :public )
+$
+				      
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+##   Initialise the actions as provided by the highlight_similar_plugin
+_method highlight_similar_plugin.init_actions()
+
+    _self.add_action(sw_action.new(
+			 :filter_to_trail,
+			 :engine, _self,
+			 :caption, "Highlight by trail",
+			 :toolbar_control, :button_item,
+			 :enabled?, _false,
+			 :action_message, :select_by_trail|()|))
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+##  Reacts upon information being available on the framework's
+##  databus.
+_method highlight_similar_plugin.sw_databus_data_available( data_type_name, data )
+    _if data_type_name _is :map_trail _then
+	_if data _isnt _unset _then
+	    .current_trail << data[2]
+	_else
+	    .current_trail << _unset 
+	_endif
+    _elif data_type_name _is :record_selection _then
+	_if data _isnt _unset _andif data[2] _isnt _unset _then
+	    .current_rwo_set << data[2]
+	_else
+	    .current_rwo_set << rwo_set.new()
+	_endif
+    _endif
+    _self.manage_actions()
+_endmethod
+$
+
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+## Enable or disable actions as appropriate.
+_method highlight_similar_plugin.manage_actions()
+    _self.action(:filter_to_trail).enabled? << _if .current_rwo_set _isnt _unset _andif
+						   .current_rwo_set.size > 0 _andif
+						   .current_trail _isnt _unset _andif
+						   .current_trail.closed?
+					       _then
+						   >> _true 
+					       _else
+						   >> _false
+					       _endif
+_endmethod
+$
+				   
+_pragma(classify_level=debug, topic={application_development_exeamples}, usage={internal})
+_method highlight_similar_plugin.select_by_trail()
+    ## Highlight geometry enclosed by the current trail belonging
+    ## to rwos of the same type as those seelcted.
+    collection_names << rope.new()
+    _for i _over .current_rwo_set.all_collections().fast_elements()
+    _loop
+	collection_names.add(i.name)
+    _endloop
+    filtered_rwo_set << _self.application.database.rwo_set().select(:collection, collection_names)
+    filtered_geom_set << filtered_rwo_set.geometry_set(.current_trail.world).select(:within, .current_trail.as_pseudo_geometry)
+     _self.databus_make_data_available(:geometry_to_highlight,
+				       filtered_geom_set )
+_endmethod
+$
